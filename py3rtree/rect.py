@@ -20,9 +20,9 @@ class Rect(object):
         if self.swapped_x: self.x,self.xx = maxx,minx
         if self.swapped_y: self.y,self.yy = maxy,miny
 
-    def coords(self):
+    @property
+    def bounds(self):
         return self.x,self.y,self.xx,self.yy
-
 
     def overlap(self, orect):
         return self.intersect(orect).area()
@@ -58,9 +58,9 @@ class Rect(object):
         if self is NullRect: return NullRect
         if other is NullRect: return NullRect
 
-        nx,ny = max(self.x, other.x),max(self.y, other.y)
-        nx2,ny2 = min(self.xx, other.xx),min(self.yy, other.yy)
-        w,h = nx2-nx, ny2-ny
+        nx, ny = max(self.x, other.x),max(self.y, other.y)
+        nx2, ny2 = min(self.xx, other.xx),min(self.yy, other.yy)
+        w, h = nx2-nx, ny2-ny
 
         if w < 0 and h < 0:
             return NullRect
@@ -81,27 +81,15 @@ class Rect(object):
         x,y = p
         return (x >= self.x and x <= self.xx and y >= self.y and y <= self.yy)
 
-    def union(self,o):
-        if o is NullRect: return Rect(self.x,self.y,self.xx,self.yy)
-        if self is NullRect: return Rect(o.x,o.y,o.xx,o.yy)
-        
-        x = self.x
-        y = self.y
-        xx = self.xx
-        yy = self.yy
-        ox = o.x
-        oy = o.y
-        oxx = o.xx
-        oyy = o.yy
+    def union(self, other):
+        if other is NullRect: return Rect(*self.bounds)
+        if self is NullRect: return Rect(*other.bounds)
 
-        nx = x if x < ox else ox
-        ny = y if y < oy else oy
-        nx2 = xx if xx > oxx else oxx
-        ny2 = yy if yy > oyy else oyy
+        nx, ny = min(self.x, other.x), min(self.y, other.y)
+        nx2, ny2 = max(self.xx, other.xx), max(self.yy, other.yy)
 
-        res = Rect(nx,ny,nx2,ny2)
+        return Rect(nx, ny, nx2, ny2)
 
-        return res
         
     def union_point(self,o):
         x,y = o

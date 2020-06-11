@@ -5,18 +5,19 @@ Payload = namedtuple('Payload', 'id object')
 
 class Item():
 
-    __slots__ = ('id', 'object', 'bounds', 'handle')
+    __slots__ = ('id', 'object', 'bbox', 'handle')
 
     def __init__(self, leaf):
+        self.handle = leaf
         leaf_obj = leaf.leaf_obj()
         self.id = leaf_obj.id
         self.object = leaf_obj.object
-        self.bounds = []
-        self.handle = leaf
+        self.bbox = leaf.rect.bounds 
 
     @property
-    def bbox(self):
-        return self.bounds 
+    def bounds(self):
+        x, y, xx, yy = self.bbox
+        return (x, xx, y, yy) 
 
     def __gt__(self, other):
         return self.id > other.id

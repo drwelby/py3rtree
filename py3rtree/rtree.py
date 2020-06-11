@@ -217,8 +217,8 @@ class _NodeCursor(object):
                 child = None
                 minarea = -1.0
                 for c in self.children():
-                    x,y,xx,yy = c.rect.coords()
-                    lx,ly,lxx,lyy = leafrect.coords()
+                    x,y,xx,yy = c.rect.bounds
+                    lx,ly,lxx,lyy = leafrect.bounds
                     nx = x if x < lx else lx
                     nxx = xx if xx > lxx else lxx
                     ny = y if y < ly else ly
