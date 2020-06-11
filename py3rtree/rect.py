@@ -54,15 +54,16 @@ class Rect(object):
         a = amt * 0.5
         return Rect(self.x-a,self.y-a,self.xx+a,self.yy+a)
 
-    def intersect(self,o):
+    def intersect(self, other):
         if self is NullRect: return NullRect
-        if o is NullRect: return NullRect
+        if other is NullRect: return NullRect
 
-        nx,ny = max(self.x,o.x),max(self.y,o.y)
-        nx2,ny2 = min(self.xx,o.xx),min(self.yy,o.yy)
+        nx,ny = max(self.x, other.x),max(self.y, other.y)
+        nx2,ny2 = min(self.xx, other.xx),min(self.yy, other.yy)
         w,h = nx2-nx, ny2-ny
 
-        if w <= 0 or h <= 0: return NullRect
+        if w < 0 and h < 0:
+            return NullRect
 
         return Rect(nx,ny,nx2,ny2)
 
@@ -71,7 +72,10 @@ class Rect(object):
         return self.does_containpoint( (o.x,o.y) ) and self.does_containpoint( (o.xx,o.yy) )
 
     def does_intersect(self,o):
-        return (self.intersect(o).area() > 0)
+        # return (self.intersect(o).area() > 0)
+        r = self.intersect(o)
+        return r is not NullRect
+        
 
     def does_containpoint(self,p):
         x,y = p

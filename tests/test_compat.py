@@ -20,3 +20,33 @@ class TestCompat(unittest.TestCase):
         #self.assertEqual(q, [None, None, 42] )
         self.assertEqual(len(q), 3)
         self.assertEqual(set(q), set([None, 42]))
+
+
+
+    def test_intersections(self):
+        ''' test intersections'''
+
+        idx = index.Index()
+        left, bottom, right, top = (0.0, 0.0, 1.0, 1.0)
+        idx.insert(0, (left, bottom, right, top))
+        # disjoint
+        q = list(idx.intersection((2.0, 2.0, 3.0, 3.0)))
+        self.assertEqual(q, [])
+        # contained
+        q = list(idx.intersection((-1.0, -1.0, 2.0, 2.0)))
+        self.assertEqual(q, [0])
+        # vertex contained
+        q = list(idx.intersection((0.5, 0.5, 2.0, 2.0)))
+        self.assertEqual(q, [0])
+        # overlap, no vertex contained
+        q = list(idx.intersection((0.5, -0.5, 2.0, 2.0)))
+        self.assertEqual(q, [0])
+        # shared side  
+        q = list(idx.intersection((0.0, 1.0 , 1.0, 2.0)))
+        self.assertEqual(q, [0])
+        # overlapped side  
+        q = list(idx.intersection((1.0, -1.0 , 2.0, 2.0)))
+        self.assertEqual(q, [0])
+        # touching corners   
+        q = list(idx.intersection((1.0, 1.0 , 2.0, 2.0)))
+        self.assertEqual(q, [0])
