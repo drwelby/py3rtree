@@ -1,0 +1,13 @@
+name: py3rtree
+description: Pure Python rtree indexing
+source: https://github.com/maxar-analytics/py3rtree
+team: Pandalytics
+language:
+  - python
+
+data_classification:
+  - public 
+
+poc:
+  - name: Pandalytics
+    email: Pandalytics@maxar.com

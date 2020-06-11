@@ -1,0 +1,22 @@
+Metadata-Version: 1.0
+Name: py3rtree
+Version: 0.1
+Summary: 2-Dimensional RTree spatial index
+Home-page: https://github.com/maxar-analytics/py3rtree
+Author: Marc Pfister
+Author-email: marc.pfister@maxar.com
+License: UNKNOWN
+Description: Two-dimensional RTree spatial index.
+        
+        
+        This is a simple pure python implemenation of a 2D RTree. For the
+        moment, it is insert-only, and aimed at creating indexes to speed
+        queries over mostly-static datasets.
+        
+        Originally written by Dan Shoutis (dan@shoutis.org).
+        see http://code.google.com/p/pyrtree
+        
+        Resurrected by Marc Pfister, with added Rtree compatibility.
+        
+        
+Platform: UNKNOWN
